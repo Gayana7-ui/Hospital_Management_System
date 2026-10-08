@@ -1,0 +1,24 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Billing{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Billing{% endblock %}
+{% block content %}
+<div class="panel">
+  <table class="data">
+    <thead><tr><th>Bill</th><th>Patient</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for b in bills %}
+    <tr>
+      <td>{{ b.bill_id }}</td>
+      <td>{{ b.patient.name if b.patient else '-' }}</td>
+      <td>₹{{ '%.2f'|format(b.total_amount) }}</td>
+      <td>₹{{ '%.2f'|format(b.amount_paid) }}</td>
+      <td>₹{{ '%.2f'|format(b.balance) }}</td>
+      <td>{{ b.payment_status }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

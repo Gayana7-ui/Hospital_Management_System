@@ -1,0 +1,32 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}My Appointments{% endblock %}
+{% block brand %}Patient Portal{% endblock %}
+{% block sidebar %}{% include 'patient/_sidebar.html' %}{% endblock %}
+{% block page_heading %}My Appointments{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Appointments</h2>
+  {% if appointments %}
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>ID</th><th>Doctor</th><th>Department</th><th>Date</th><th>Time</th><th>Reason</th><th>Status</th></tr></thead>
+      <tbody>
+      {% for a in appointments %}
+      <tr>
+        <td>{{ a.appointment_id }}</td>
+        <td>{{ a.doctor.name if a.doctor else '-' }}</td>
+        <td>{{ a.department }}</td>
+        <td>{{ a.appointment_date }}</td>
+        <td>{{ a.appointment_time }}</td>
+        <td>{{ a.reason or '-' }}</td>
+        <td><span class="badge badge-info">{{ a.status }}</span></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">No appointments yet.</div>
+  {% endif %}
+</div>
+{% endblock %}

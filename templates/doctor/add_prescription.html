@@ -1,0 +1,28 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Add Prescription{% endblock %}
+{% block brand %}Doctor Portal{% endblock %}
+{% block sidebar %}{% include 'doctor/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Add Prescription{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Search Patient</h2>
+  <form method="get" class="search-bar">
+    <input class="form-control" name="patient_id" placeholder="Enter Patient ID (e.g. PAT001)" value="{{ patient.patient_id if patient else '' }}" required>
+    <button class="btn btn-primary" type="submit">SEARCH</button>
+  </form>
+  {% if request.args.get('patient_id') and not patient %}
+  <div class="alert alert-error">Patient not found.</div>
+  {% endif %}
+  {% if patient %}
+  <div class="info-grid">
+    <div class="info-item"><div class="lbl">Patient ID</div><div class="val">{{ patient.patient_id }}</div></div>
+    <div class="info-item"><div class="lbl">Name</div><div class="val">{{ patient.name }}</div></div>
+    <div class="info-item"><div class="lbl">Age</div><div class="val">{{ patient.age }}</div></div>
+    <div class="info-item"><div class="lbl">Phone</div><div class="val">{{ patient.phone }}</div></div>
+    <div class="info-item"><div class="lbl">Disease</div><div class="val">{{ patient.disease or '-' }}</div></div>
+    <div class="info-item"><div class="lbl">Blood Group</div><div class="val">{{ patient.blood_group }}</div></div>
+  </div>
+  <a class="btn btn-accent" href="{{ url_for('doctor.write_prescription', patient_code=patient.patient_id) }}">OPEN PRESCRIPTION</a>
+  {% endif %}
+</div>
+{% endblock %}

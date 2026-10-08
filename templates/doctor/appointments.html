@@ -1,0 +1,39 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Appointments{% endblock %}
+{% block brand %}Doctor Portal{% endblock %}
+{% block sidebar %}{% include 'doctor/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Appointments{% endblock %}
+{% block content %}
+<div class="panel">
+  {% if appointments %}
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>ID</th><th>Patient</th><th>Date</th><th>Time</th><th>Reason</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>
+      {% for a in appointments %}
+      <tr>
+        <td>{{ a.appointment_id }}</td>
+        <td>{{ a.patient.name if a.patient else '-' }} ({{ a.patient.patient_id if a.patient else '' }})</td>
+        <td>{{ a.appointment_date }}</td>
+        <td>{{ a.appointment_time }}</td>
+        <td>{{ a.reason or '-' }}</td>
+        <td><span class="badge badge-info">{{ a.status }}</span></td>
+        <td>
+          <select class="form-control" style="width:auto;" onchange="updateAppointmentStatus({{ a.id }}, this.value)">
+            <option value="">Update...</option>
+            <option>Confirmed</option><option>Completed</option><option>Cancelled</option>
+          </select>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">No appointments.</div>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/queue.js') }}"></script>
+{% endblock %}

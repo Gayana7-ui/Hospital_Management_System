@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Real-Time Hospital & Blood Bank Management{% endblock %}
+{% block body %}
+<div class="landing">
+  <nav class="landing-nav">
+    <div class="brand">Medi<span>Care</span> HMS</div>
+    <a href="#roles" class="btn btn-primary btn-sm">Get Started</a>
+  </nav>
+  <section class="landing-hero">
+    <div>
+      <h1>Real-Time Hospital and Blood Bank Management System</h1>
+      <p>Connect patients, doctors, receptionists and administrators with appointments, prescriptions, billing, emergency hospitals and blood bank services — all in one platform.</p>
+      <div class="role-grid" id="roles">
+        <a class="role-card" href="{{ url_for('auth.patient_login') }}">
+          <h3>Patient</h3>
+          <p>Book appointments, view prescriptions & blood requirements</p>
+          <span class="btn btn-primary btn-sm">Patient Login</span>
+        </a>
+        <a class="role-card" href="{{ url_for('auth.doctor_login') }}">
+          <h3>Doctor</h3>
+          <p>Manage appointments, prescribe medicines & answer questions</p>
+          <span class="btn btn-primary btn-sm">Doctor Login</span>
+        </a>
+        <a class="role-card" href="{{ url_for('auth.receptionist_login') }}">
+          <h3>Receptionist</h3>
+          <p>Register patients, tokens, queue & billing</p>
+          <span class="btn btn-primary btn-sm">Reception Login</span>
+        </a>
+        <a class="role-card" href="{{ url_for('auth.admin_login') }}">
+          <h3>Admin</h3>
+          <p>Full system CRUD, blood banks, reports & settings</p>
+          <span class="btn btn-primary btn-sm">Admin Login</span>
+        </a>
+      </div>
+      <p style="margin-top:1.5rem;font-size:0.9rem;color:var(--muted);">
+        New patient? <a href="{{ url_for('auth.patient_register') }}">Register here</a>
+      </p>
+    </div>
+    <div class="hero-visual">
+      <h2>Care that connects every role</h2>
+      <p>Appointments · Tokens · Prescriptions · Blood Stock · Emergency Search</p>
+    </div>
+  </section>
+</div>
+{% endblock %}

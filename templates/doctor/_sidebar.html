@@ -1,0 +1,9 @@
+<a href="{{ url_for('doctor.dashboard') }}" class="{{ 'active' if request.endpoint == 'doctor.dashboard' }}">Dashboard</a>
+<a href="{{ url_for('doctor.profile') }}" class="{{ 'active' if request.endpoint == 'doctor.profile' }}">My Profile</a>
+<a href="{{ url_for('doctor.appointments') }}" class="{{ 'active' if request.endpoint == 'doctor.appointments' }}">Appointments</a>
+<a href="{{ url_for('doctor.patients') }}" class="{{ 'active' if request.endpoint == 'doctor.patients' }}">Patients</a>
+<a href="{{ url_for('doctor.add_prescription') }}" class="{{ 'active' if request.endpoint in ['doctor.add_prescription','doctor.write_prescription'] }}">Add Prescription</a>
+<a href="{{ url_for('doctor.prescription_history') }}" class="{{ 'active' if request.endpoint == 'doctor.prescription_history' }}">Prescription History</a>
+<a href="{{ url_for('doctor.medicines') }}" class="{{ 'active' if request.endpoint == 'doctor.medicines' }}">Medicines</a>
+<a href="{{ url_for('doctor.availability') }}" class="{{ 'active' if request.endpoint == 'doctor.availability' }}">Doctor Availability</a>
+<a href="{{ url_for('doctor.questions') }}" class="{{ 'active' if request.endpoint == 'doctor.questions' }}">Patient Questions</a>

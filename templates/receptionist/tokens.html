@@ -1,0 +1,27 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Tokens{% endblock %}
+{% block brand %}Reception Desk{% endblock %}
+{% block sidebar %}{% include 'receptionist/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Token Management{% endblock %}
+{% block content %}
+<div class="panel">
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Token</th><th>Patient ID</th><th>Name</th><th>Doctor</th><th>Time</th><th>Position</th><th>Status</th></tr></thead>
+      <tbody>
+      {% for t in tokens %}
+      <tr>
+        <td><strong>{{ t.token_number }}</strong></td>
+        <td>{{ t.patient.patient_id if t.patient else '-' }}</td>
+        <td>{{ t.patient.name if t.patient else '-' }}</td>
+        <td>{{ t.doctor.name if t.doctor else '-' }}</td>
+        <td>{{ t.appointment_time or '-' }}</td>
+        <td>{{ t.queue_position }}</td>
+        <td><span class="badge badge-warning">{{ t.status }}</span></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

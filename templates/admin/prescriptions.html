@@ -1,0 +1,23 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Prescriptions{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Prescriptions{% endblock %}
+{% block content %}
+<div class="panel">
+  <table class="data">
+    <thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Diagnosis</th></tr></thead>
+    <tbody>
+    {% for rx in prescriptions %}
+    <tr>
+      <td>{{ rx.prescription_id }}</td>
+      <td>{{ rx.patient.name if rx.patient else '-' }}</td>
+      <td>{{ rx.doctor.name if rx.doctor else '-' }}</td>
+      <td>{{ rx.prescription_date }}</td>
+      <td>{{ rx.diagnosis or '-' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

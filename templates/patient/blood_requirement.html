@@ -1,0 +1,70 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Blood Requirement{% endblock %}
+{% block brand %}Patient Portal{% endblock %}
+{% block sidebar %}{% include 'patient/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Blood Requirement{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Submit Blood Requirement</h2>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-grid">
+      <div class="form-group"><label>Patient ID</label><input class="form-control" value="{{ patient.patient_id }}" readonly></div>
+      <div class="form-group"><label>Patient Name</label><input class="form-control" value="{{ patient.name }}" readonly></div>
+      <div class="form-group">
+        <label>Hospital / Location</label>
+        <select class="form-control" name="hospital" id="location">
+          {% for h in hospitals %}<option>{{ h.name }}</option>{% endfor %}
+          <option>Hospital A</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Blood Group Required</label>
+        <select class="form-control" name="blood_group_required" id="blood_group">
+          {% for bg in blood_groups %}<option {% if patient.blood_group==bg %}selected{% endif %}>{{ bg }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="form-group"><label>Quantity Required</label><input type="number" step="0.1" min="0.1" class="form-control" name="quantity_required" id="quantity" value="2" required></div>
+      <div class="form-group"><label>Required Date</label><input type="date" class="form-control" name="required_date"></div>
+      <div class="form-group"><label>Contact Number</label><input class="form-control" name="contact_number" value="{{ patient.phone }}"></div>
+      <div class="form-group"><label>Location (search)</label><input class="form-control" name="location" value="Hospital A"></div>
+      <div class="form-group" style="grid-column:1/-1;"><label>Disease / Reason</label><textarea class="form-control" name="disease_reason" rows="2">{{ patient.disease or '' }}</textarea></div>
+    </div>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+      <button class="btn btn-primary" type="submit">Submit Requirement</button>
+      <button class="btn btn-secondary" type="button" onclick="searchBlood()">Search Availability</button>
+    </div>
+  </form>
+</div>
+<div class="panel">
+  <h2>Blood Availability Search Results</h2>
+  <div id="blood-results"><div class="empty-state">Click “Search Availability” to check stock.</div></div>
+</div>
+<div class="panel">
+  <h2>My Blood Requests</h2>
+  {% if requests %}
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Request</th><th>Group</th><th>Qty</th><th>Hospital</th><th>Date</th><th>Status</th></tr></thead>
+      <tbody>
+      {% for r in requests %}
+      <tr>
+        <td>{{ r.request_id }}</td>
+        <td>{{ r.blood_group_required }}</td>
+        <td>{{ r.quantity_required }}</td>
+        <td>{{ r.hospital }}</td>
+        <td>{{ r.required_date or '-' }}</td>
+        <td><span class="badge badge-warning">{{ r.status }}</span></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">No blood requests yet.</div>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/blood.js') }}"></script>
+{% endblock %}

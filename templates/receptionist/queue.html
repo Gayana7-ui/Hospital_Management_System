@@ -1,0 +1,15 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Queue{% endblock %}
+{% block brand %}Reception Desk{% endblock %}
+{% block sidebar %}{% include 'receptionist/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Queue Management{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Live Queue <small style="font-weight:400;color:var(--muted);">(auto-refreshes)</small></h2>
+  <div id="live-queue"></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/queue.js') }}"></script>
+<script>document.addEventListener('DOMContentLoaded', () => refreshQueue('live-queue', 4000));</script>
+{% endblock %}

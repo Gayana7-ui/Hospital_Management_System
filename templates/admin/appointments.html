@@ -1,0 +1,23 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Appointments{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Appointments{% endblock %}
+{% block content %}
+<div class="panel">
+  <table class="data">
+    <thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for a in appointments %}
+    <tr>
+      <td>{{ a.appointment_id }}</td>
+      <td>{{ a.patient.name if a.patient else '-' }}</td>
+      <td>{{ a.doctor.name if a.doctor else '-' }}</td>
+      <td>{{ a.appointment_date }}</td><td>{{ a.appointment_time }}</td>
+      <td><span class="badge badge-info">{{ a.status }}</span></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

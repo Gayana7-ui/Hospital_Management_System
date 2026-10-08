@@ -1,0 +1,29 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Prescription History{% endblock %}
+{% block brand %}Doctor Portal{% endblock %}
+{% block sidebar %}{% include 'doctor/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Prescription History{% endblock %}
+{% block content %}
+<div class="panel">
+  {% if prescriptions %}
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Prescription ID</th><th>Patient</th><th>Date</th><th>Diagnosis</th><th>Medicines</th></tr></thead>
+      <tbody>
+      {% for rx in prescriptions %}
+      <tr>
+        <td>{{ rx.prescription_id }}</td>
+        <td>{{ rx.patient.name if rx.patient else '-' }} ({{ rx.patient.patient_id if rx.patient else '' }})</td>
+        <td>{{ rx.prescription_date }}</td>
+        <td>{{ rx.diagnosis or '-' }}</td>
+        <td>{% for m in rx.medicines %}{{ m.medicine_name }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">No prescriptions yet.</div>
+  {% endif %}
+</div>
+{% endblock %}

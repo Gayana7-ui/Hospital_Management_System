@@ -1,0 +1,28 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Patients{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Patients{% endblock %}
+{% block content %}
+<div class="panel">
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Phone</th><th>Blood</th><th>Disease</th><th>Action</th></tr></thead>
+      <tbody>
+      {% for p in patients %}
+      <tr>
+        <td>{{ p.patient_id }}</td><td>{{ p.name }}</td><td>{{ p.age }}</td><td>{{ p.phone }}</td>
+        <td>{{ p.blood_group }}</td><td>{{ p.disease or '-' }}</td>
+        <td>
+          <form method="post" action="{{ url_for('admin.delete_patient', pid=p.id) }}" style="display:inline;" onsubmit="return confirm('Delete this patient?');">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

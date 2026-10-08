@@ -1,0 +1,28 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Medicine Reminders{% endblock %}
+{% block brand %}Patient Portal{% endblock %}
+{% block sidebar %}{% include 'patient/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Medicine Reminders{% endblock %}
+{% block content %}
+<p class="page-sub">Schedule based on your doctor's prescribed intake pattern. This is not medical advice.</p>
+{% if reminders %}
+  {% for r in reminders %}
+  <div class="reminder-card">
+    <strong>{{ r.medicine_name }}</strong>
+    <div style="font-size:0.9rem;color:var(--muted);margin-top:0.25rem;">
+      Prescription {{ r.prescription_id }} · Dosage: {{ r.dosage or '-' }} · Days: {{ r.number_of_days }}
+    </div>
+    <div class="intake-viz">
+      <span>Morning: {{ r.morning }}</span>
+      <span>Afternoon: {{ r.afternoon }}</span>
+      <span>Night: {{ r.night }}</span>
+      <span>Pattern: {{ r.medicine_intake }}</span>
+      <span class="badge badge-success">{{ r.status }}</span>
+    </div>
+    {% if r.instructions %}<p style="margin-top:0.5rem;">{{ r.instructions }}</p>{% endif %}
+  </div>
+  {% endfor %}
+{% else %}
+<div class="empty-state">No medicine reminders. Prescriptions will appear here after your doctor adds them.</div>
+{% endif %}
+{% endblock %}

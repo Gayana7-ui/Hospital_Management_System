@@ -1,0 +1,18 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Patient Dashboard{% endblock %}
+{% block brand %}Patient Portal{% endblock %}
+{% block sidebar %}{% include 'patient/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Dashboard{% endblock %}
+{% block content %}
+<h1 class="page-title">Welcome, {{ patient.name }}</h1>
+<p class="page-sub">Your health overview at a glance</p>
+<div class="stats-grid">
+  <div class="stat-card"><div class="label">Patient ID</div><div class="value" style="font-size:1.2rem;">{{ patient.patient_id }}</div></div>
+  <div class="stat-card"><div class="label">Patient Name</div><div class="value" style="font-size:1.1rem;">{{ patient.name }}</div></div>
+  <div class="stat-card"><div class="label">Upcoming Appointment</div><div class="value" style="font-size:1rem;">{% if upcoming %}{{ upcoming.appointment_date }} {{ upcoming.appointment_time }}{% else %}None{% endif %}</div></div>
+  <div class="stat-card"><div class="label">Current Token</div><div class="value">{% if current_token %}{{ current_token.token_number }}{% else %}—{% endif %}</div></div>
+  <div class="stat-card"><div class="label">Prescriptions</div><div class="value">{{ rx_count }}</div></div>
+  <div class="stat-card"><div class="label">Pending Bill</div><div class="value" style="font-size:1rem;">{% if pending_bill %}₹{{ '%.2f'|format(pending_bill.balance) }}{% else %}None{% endif %}</div></div>
+  <div class="stat-card"><div class="label">Blood Requirement</div><div class="value" style="font-size:1rem;">{% if blood_req %}<span class="badge badge-warning">{{ blood_req.status }}</span>{% else %}None{% endif %}</div></div>
+</div>
+{% endblock %}

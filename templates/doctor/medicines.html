@@ -1,0 +1,25 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Medicines{% endblock %}
+{% block brand %}Doctor Portal{% endblock %}
+{% block sidebar %}{% include 'doctor/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Medicines{% endblock %}
+{% block content %}
+<div class="panel">
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Name</th><th>Type</th><th>Strength</th><th>Description</th><th>Status</th></tr></thead>
+      <tbody>
+      {% for m in medicines %}
+      <tr>
+        <td>{{ m.medicine_name }}</td>
+        <td>{{ m.medicine_type }}</td>
+        <td>{{ m.strength }}</td>
+        <td>{{ m.description }}</td>
+        <td><span class="badge badge-success">{{ m.status }}</span></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

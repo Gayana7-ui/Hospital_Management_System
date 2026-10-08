@@ -1,0 +1,28 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Availability{% endblock %}
+{% block brand %}Doctor Portal{% endblock %}
+{% block sidebar %}{% include 'doctor/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Doctor Availability{% endblock %}
+{% block content %}
+<div class="panel">
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-grid">
+      <div class="form-group"><label>Doctor</label><input class="form-control" value="{{ doctor.name }}" readonly></div>
+      <div class="form-group"><label>Specialization</label><input class="form-control" value="{{ doctor.specialization }}" readonly></div>
+      <div class="form-group"><label>Hospital</label><input class="form-control" value="{{ doctor.hospital or '' }}" readonly></div>
+      <div class="form-group">
+        <label>Availability</label>
+        <select class="form-control" name="availability">
+          {% for a in ['Available','Not Available','On Leave','Emergency Only'] %}
+          <option {% if doctor.availability==a %}selected{% endif %}>{{ a }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group"><label>Available From</label><input type="time" class="form-control" name="available_from" value="{{ doctor.available_from or '09:00' }}"></div>
+      <div class="form-group"><label>Available To</label><input type="time" class="form-control" name="available_to" value="{{ doctor.available_to or '17:00' }}"></div>
+    </div>
+    <button class="btn btn-primary" type="submit">Update Availability</button>
+  </form>
+</div>
+{% endblock %}

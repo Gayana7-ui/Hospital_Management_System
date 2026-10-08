@@ -1,0 +1,9 @@
+<a href="{{ url_for('receptionist.dashboard') }}" class="{{ 'active' if request.endpoint == 'receptionist.dashboard' }}">Dashboard</a>
+<a href="{{ url_for('receptionist.register_patient') }}" class="{{ 'active' if request.endpoint == 'receptionist.register_patient' }}">Register Patient</a>
+<a href="{{ url_for('receptionist.search_patient') }}" class="{{ 'active' if request.endpoint == 'receptionist.search_patient' }}">Search Patient</a>
+<a href="{{ url_for('receptionist.appointments') }}" class="{{ 'active' if request.endpoint == 'receptionist.appointments' }}">Appointments</a>
+<a href="{{ url_for('receptionist.tokens') }}" class="{{ 'active' if request.endpoint == 'receptionist.tokens' }}">Token Management</a>
+<a href="{{ url_for('receptionist.queue') }}" class="{{ 'active' if request.endpoint == 'receptionist.queue' }}">Queue Management</a>
+<a href="{{ url_for('receptionist.patient_entry') }}" class="{{ 'active' if request.endpoint == 'receptionist.patient_entry' }}">Patient Entry</a>
+<a href="{{ url_for('receptionist.billing') }}" class="{{ 'active' if request.endpoint == 'receptionist.billing' }}">Billing</a>
+<a href="{{ url_for('receptionist.doctor_availability') }}" class="{{ 'active' if request.endpoint == 'receptionist.doctor_availability' }}">Doctor Availability</a>

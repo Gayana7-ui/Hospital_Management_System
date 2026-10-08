@@ -1,0 +1,30 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Register Patient{% endblock %}
+{% block brand %}Reception Desk{% endblock %}
+{% block sidebar %}{% include 'receptionist/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Register Patient{% endblock %}
+{% block content %}
+<div class="panel">
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-grid">
+      <div class="form-group"><label>Name</label><input class="form-control" name="name" required></div>
+      <div class="form-group"><label>Age</label><input type="number" class="form-control" name="age" required></div>
+      <div class="form-group">
+        <label>Gender</label>
+        <select class="form-control" name="gender"><option>Male</option><option>Female</option><option>Other</option></select>
+      </div>
+      <div class="form-group"><label>Phone</label><input class="form-control" name="phone" required></div>
+      <div class="form-group"><label>Email</label><input class="form-control" name="email"></div>
+      <div class="form-group">
+        <label>Blood Group</label>
+        <select class="form-control" name="blood_group">{% for bg in blood_groups %}<option>{{ bg }}</option>{% endfor %}</select>
+      </div>
+      <div class="form-group"><label>Disease</label><input class="form-control" name="disease"></div>
+      <div class="form-group"><label>Temp Password</label><input class="form-control" name="password" value="Patient@123"></div>
+      <div class="form-group" style="grid-column:1/-1;"><label>Address</label><textarea class="form-control" name="address" rows="2"></textarea></div>
+    </div>
+    <button class="btn btn-primary" type="submit">Register Patient</button>
+  </form>
+</div>
+{% endblock %}

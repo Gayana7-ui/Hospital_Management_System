@@ -1,0 +1,56 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Blood Transactions{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Blood Transactions{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Record Transaction</h2>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Blood Bank</label>
+        <select class="form-control" name="blood_bank_id">
+          {% for b in banks %}<option value="{{ b.id }}">{{ b.name }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select class="form-control" name="transaction_type">
+          <option>Donation</option><option>Issue</option><option>Transfer</option><option>Return</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Blood Group</label>
+        <select class="form-control" name="blood_group">{% for bg in blood_groups %}<option>{{ bg }}</option>{% endfor %}</select>
+      </div>
+      <div class="form-group"><label>Quantity</label><input type="number" step="0.1" class="form-control" name="quantity" value="1" required></div>
+      <div class="form-group"><label>Patient ID (for Issue)</label><input class="form-control" name="patient_id" placeholder="PAT001"></div>
+      <div class="form-group"><label>Donor ID (for Donation)</label><input class="form-control" name="donor_id" placeholder="DON001"></div>
+      <div class="form-group"><label>Hospital</label><input class="form-control" name="hospital"></div>
+    </div>
+    <button class="btn btn-primary" type="submit">Record</button>
+  </form>
+</div>
+<div class="panel">
+  <table class="data">
+    <thead><tr><th>Txn</th><th>Type</th><th>Group</th><th>Qty</th><th>Bank</th><th>Patient</th><th>Donor</th><th>Date</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for t in transactions %}
+    <tr>
+      <td>{{ t.transaction_id }}</td>
+      <td>{{ t.transaction_type }}</td>
+      <td>{{ t.blood_group }}</td>
+      <td>{{ t.quantity }}</td>
+      <td>{{ t.blood_bank.name if t.blood_bank else '-' }}</td>
+      <td>{{ t.patient.patient_id if t.patient else '-' }}</td>
+      <td>{{ t.donor.donor_id if t.donor else '-' }}</td>
+      <td>{{ t.transaction_date.strftime('%Y-%m-%d') if t.transaction_date else '-' }}</td>
+      <td>{{ t.status }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

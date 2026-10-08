@@ -1,0 +1,23 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Tokens{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Tokens{% endblock %}
+{% block content %}
+<div class="panel">
+  <table class="data">
+    <thead><tr><th>Token</th><th>Patient</th><th>Doctor</th><th>Position</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for t in tokens %}
+    <tr>
+      <td>{{ t.token_number }}</td>
+      <td>{{ t.patient.name if t.patient else '-' }}</td>
+      <td>{{ t.doctor.name if t.doctor else '-' }}</td>
+      <td>{{ t.queue_position }}</td>
+      <td>{{ t.status }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

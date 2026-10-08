@@ -1,0 +1,55 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Write Prescription{% endblock %}
+{% block brand %}Doctor Portal{% endblock %}
+{% block sidebar %}{% include 'doctor/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Prescription{% endblock %}
+{% block content %}
+<div class="panel">
+  <div class="info-grid">
+    <div class="info-item"><div class="lbl">Doctor ID</div><div class="val">{{ doctor.doctor_id }}</div></div>
+    <div class="info-item"><div class="lbl">Doctor Name</div><div class="val">{{ doctor.name }}</div></div>
+    <div class="info-item"><div class="lbl">Specialization</div><div class="val">{{ doctor.specialization }}</div></div>
+    <div class="info-item"><div class="lbl">Patient ID</div><div class="val">{{ patient.patient_id }}</div></div>
+    <div class="info-item"><div class="lbl">Patient Name</div><div class="val">{{ patient.name }}</div></div>
+    <div class="info-item"><div class="lbl">Age / Disease / Blood</div><div class="val">{{ patient.age }} · {{ patient.disease or '-' }} · {{ patient.blood_group }}</div></div>
+    <div class="info-item"><div class="lbl">Prescription Date</div><div class="val">{{ today }}</div></div>
+  </div>
+  <input type="hidden" id="rx-patient-id" value="{{ patient.patient_id }}">
+  <div class="form-grid">
+    <div class="form-group" style="grid-column:1/-1;">
+      <label>Diagnosis</label>
+      <input class="form-control" id="rx-diagnosis" value="{{ patient.disease or '' }}">
+    </div>
+    <div class="form-group" style="grid-column:1/-1;">
+      <label>Notes</label>
+      <textarea class="form-control" id="rx-notes" rows="2"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="med-layout">
+  <div class="panel">
+    <h2>Medicines (from database)</h2>
+    <input class="form-control" id="med-search" placeholder="Search medicines..." oninput="filterMedicineList()" style="margin-bottom:0.75rem;">
+    {% for m in medicines %}
+    <div class="med-list-item" data-name="{{ m.medicine_name }}" data-id="{{ m.id }}" data-strength="{{ m.strength or '' }}">
+      <div>
+        <strong>{{ m.medicine_name }}</strong>
+        <div style="font-size:0.8rem;color:var(--muted);">{{ m.medicine_type }} · {{ m.strength }}</div>
+      </div>
+      <button type="button" class="btn-icon btn-add-med" title="Add">+</button>
+    </div>
+    {% else %}
+    <div class="empty-state">No medicines in database. Ask admin to add medicines.</div>
+    {% endfor %}
+  </div>
+  <div class="panel">
+    <h2>Selected Medicines</h2>
+    <div id="selected-medicines"></div>
+    <button type="button" class="btn btn-primary" id="btn-save-rx" onclick="savePrescription()" style="margin-top:1rem;">Save Prescription</button>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/prescription.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Patient Questions{% endblock %}
+{% block brand %}Doctor Portal{% endblock %}
+{% block sidebar %}{% include 'doctor/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Patient Questions{% endblock %}
+{% block content %}
+{% for q in questions %}
+<div class="panel">
+  <div class="info-grid">
+    <div class="info-item"><div class="lbl">Patient</div><div class="val">{{ q.patient.name if q.patient else '-' }}</div></div>
+    <div class="info-item"><div class="lbl">Medicine</div><div class="val">{{ q.medicine_name }}</div></div>
+    <div class="info-item"><div class="lbl">Status</div><div class="val"><span class="badge badge-info">{{ q.status }}</span></div></div>
+  </div>
+  <p><strong>Question:</strong> {{ q.question }}</p>
+  {% if q.doctor_answer %}
+  <p><strong>Your Answer:</strong> {{ q.doctor_answer }}</p>
+  {% else %}
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="question_id" value="{{ q.id }}">
+    <div class="form-group"><label>Doctor Answer</label><textarea class="form-control" name="doctor_answer" rows="3" required></textarea></div>
+    <button class="btn btn-primary" type="submit">Submit Answer</button>
+  </form>
+  {% endif %}
+</div>
+{% else %}
+<div class="empty-state">No patient questions.</div>
+{% endfor %}
+{% endblock %}

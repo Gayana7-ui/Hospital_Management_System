@@ -1,0 +1,18 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Reports{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Reports{% endblock %}
+{% block content %}
+<div class="stats-grid">
+  <div class="stat-card"><div class="label">Total Patients</div><div class="value">{{ data.patients }}</div></div>
+  <div class="stat-card"><div class="label">Total Doctors</div><div class="value">{{ data.doctors }}</div></div>
+  <div class="stat-card"><div class="label">Appointments</div><div class="value">{{ data.appointments }}</div></div>
+  <div class="stat-card"><div class="label">Completed Appts</div><div class="value">{{ data.completed_appts }}</div></div>
+  <div class="stat-card"><div class="label">Prescriptions</div><div class="value">{{ data.prescriptions }}</div></div>
+  <div class="stat-card"><div class="label">Pending Bills</div><div class="value">{{ data.bills_pending }}</div></div>
+  <div class="stat-card"><div class="label">Blood Stock Units</div><div class="value">{{ data.blood_stock_total }}</div></div>
+  <div class="stat-card"><div class="label">Donors</div><div class="value">{{ data.donors }}</div></div>
+  <div class="stat-card"><div class="label">Pending Blood Requests</div><div class="value">{{ data.blood_requests_pending }}</div></div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Reception Dashboard{% endblock %}
+{% block brand %}Reception Desk{% endblock %}
+{% block sidebar %}{% include 'receptionist/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Dashboard{% endblock %}
+{% block content %}
+<h1 class="page-title">Welcome, {{ receptionist.name }}</h1>
+<div class="stats-grid">
+  <div class="stat-card"><div class="label">Patients</div><div class="value">{{ stats.patients }}</div></div>
+  <div class="stat-card"><div class="label">Appointments Today</div><div class="value">{{ stats.appointments_today }}</div></div>
+  <div class="stat-card"><div class="label">Waiting Queue</div><div class="value">{{ stats.waiting }}</div></div>
+  <div class="stat-card"><div class="label">Pending Bills</div><div class="value">{{ stats.pending_bills }}</div></div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Blood Stock{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Blood Stock{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Add / Update Stock</h2>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="action" value="create">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Blood Bank</label>
+        <select class="form-control" name="blood_bank_id" required>
+          {% for b in banks %}<option value="{{ b.id }}">{{ b.name }} ({{ b.location }})</option>{% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Blood Group</label>
+        <select class="form-control" name="blood_group">{% for bg in blood_groups %}<option>{{ bg }}</option>{% endfor %}</select>
+      </div>
+      <div class="form-group"><label>Quantity</label><input type="number" step="0.1" class="form-control" name="available_quantity" value="5"></div>
+      <div class="form-group"><label>Unit</label><input class="form-control" name="unit" value="Units"></div>
+    </div>
+    <button class="btn btn-primary" type="submit">Add Stock</button>
+  </form>
+</div>
+<div class="panel">
+  <table class="data">
+    <thead><tr><th>Bank</th><th>Group</th><th>Qty</th><th>Location</th><th>Updated</th><th>Update Qty</th></tr></thead>
+    <tbody>
+    {% for s in stocks %}
+    <tr>
+      <td>{{ s.blood_bank.name if s.blood_bank else '-' }}</td>
+      <td>{{ s.blood_group }}</td>
+      <td>{{ s.available_quantity }}</td>
+      <td>{{ s.blood_bank.location if s.blood_bank else '-' }}</td>
+      <td>{{ s.last_updated.strftime('%Y-%m-%d %H:%M') if s.last_updated else '-' }}</td>
+      <td>
+        <form method="post" style="display:flex;gap:0.35rem;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="action" value="update">
+          <input type="hidden" name="id" value="{{ s.id }}">
+          <input type="number" step="0.1" class="form-control" name="available_quantity" value="{{ s.available_quantity }}" style="width:90px;">
+          <button class="btn btn-secondary btn-sm" type="submit">Save</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

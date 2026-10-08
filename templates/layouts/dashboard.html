@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="app-shell">
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">{% block brand %}MediCare HMS{% endblock %}</div>
+    <div class="sidebar-user">
+      {{ current_name }}<br>
+      <small>{{ current_display_id }} · {{ current_role|capitalize }}</small>
+    </div>
+    <nav>
+      {% block sidebar %}{% endblock %}
+      <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </nav>
+  </aside>
+  <div class="main-area">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <button class="menu-toggle" type="button" onclick="toggleSidebar()">☰</button>
+        <strong>{% block page_heading %}Dashboard{% endblock %}</strong>
+      </div>
+      <div style="font-size:0.9rem;color:var(--muted);">{{ current_display_id }}</div>
+    </header>
+    <main class="content">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-wrap">
+          {% for category, message in messages %}
+          <div class="alert alert-{{ 'error' if category == 'error' else category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</div>
+{% endblock %}

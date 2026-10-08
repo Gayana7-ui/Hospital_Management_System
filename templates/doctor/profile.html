@@ -1,0 +1,23 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Doctor Profile{% endblock %}
+{% block brand %}Doctor Portal{% endblock %}
+{% block sidebar %}{% include 'doctor/_sidebar.html' %}{% endblock %}
+{% block page_heading %}My Profile{% endblock %}
+{% block content %}
+<div class="panel">
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-grid">
+      <div class="form-group"><label>Doctor ID</label><input class="form-control" value="{{ doctor.doctor_id }}" readonly></div>
+      <div class="form-group"><label>Name</label><input class="form-control" name="name" value="{{ doctor.name }}"></div>
+      <div class="form-group"><label>Email</label><input class="form-control" name="email" value="{{ doctor.email or '' }}"></div>
+      <div class="form-group"><label>Phone</label><input class="form-control" name="phone" value="{{ doctor.phone or '' }}"></div>
+      <div class="form-group"><label>Specialization</label><input class="form-control" value="{{ doctor.specialization }}" readonly></div>
+      <div class="form-group"><label>Qualification</label><input class="form-control" name="qualification" value="{{ doctor.qualification or '' }}"></div>
+      <div class="form-group"><label>Experience (years)</label><input type="number" class="form-control" name="experience" value="{{ doctor.experience }}"></div>
+      <div class="form-group"><label>Hospital</label><input class="form-control" name="hospital" value="{{ doctor.hospital or '' }}"></div>
+    </div>
+    <button class="btn btn-primary" type="submit">Save</button>
+  </form>
+</div>
+{% endblock %}

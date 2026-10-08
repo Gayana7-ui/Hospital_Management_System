@@ -1,0 +1,48 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Donors{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Donors{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Add Donor</h2>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="action" value="create">
+    <div class="form-grid">
+      <div class="form-group"><label>Name</label><input class="form-control" name="name" required></div>
+      <div class="form-group"><label>Age</label><input type="number" class="form-control" name="age" required></div>
+      <div class="form-group"><label>Phone</label><input class="form-control" name="phone"></div>
+      <div class="form-group">
+        <label>Blood Group</label>
+        <select class="form-control" name="blood_group">{% for bg in blood_groups %}<option>{{ bg }}</option>{% endfor %}</select>
+      </div>
+      <div class="form-group"><label>Last Donation</label><input type="date" class="form-control" name="last_donation_date"></div>
+      <div class="form-group"><label>Eligibility</label><select class="form-control" name="eligibility_status"><option>Eligible</option><option>Not Eligible</option></select></div>
+      <div class="form-group" style="grid-column:1/-1;"><label>Address</label><input class="form-control" name="address"></div>
+    </div>
+    <button class="btn btn-primary" type="submit">Add Donor</button>
+  </form>
+</div>
+<div class="panel">
+  <table class="data">
+    <thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Group</th><th>Eligibility</th><th>Action</th></tr></thead>
+    <tbody>
+    {% for d in donors %}
+    <tr>
+      <td>{{ d.donor_id }}</td><td>{{ d.name }}</td><td>{{ d.age }}</td><td>{{ d.blood_group }}</td>
+      <td>{{ d.eligibility_status }}</td>
+      <td>
+        <form method="post" onsubmit="return confirm('Delete donor?');">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="action" value="delete">
+          <input type="hidden" name="id" value="{{ d.id }}">
+          <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

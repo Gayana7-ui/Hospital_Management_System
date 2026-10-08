@@ -1,0 +1,46 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Hospitals{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Hospitals{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Add Hospital</h2>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="action" value="create">
+    <div class="form-grid">
+      <div class="form-group"><label>Name</label><input class="form-control" name="name" required></div>
+      <div class="form-group"><label>City</label><input class="form-control" name="city"></div>
+      <div class="form-group"><label>Phone</label><input class="form-control" name="phone"></div>
+      <div class="form-group"><label>Latitude</label><input class="form-control" name="latitude"></div>
+      <div class="form-group"><label>Longitude</label><input class="form-control" name="longitude"></div>
+      <div class="form-group"><label>Emergency</label><select class="form-control" name="emergency_available"><option value="1">Yes</option><option value="0">No</option></select></div>
+      <div class="form-group" style="grid-column:1/-1;"><label>Address</label><input class="form-control" name="address"></div>
+      <div class="form-group" style="grid-column:1/-1;"><label>Services</label><input class="form-control" name="services"></div>
+    </div>
+    <button class="btn btn-primary" type="submit">Add Hospital</button>
+  </form>
+</div>
+<div class="panel">
+  <table class="data">
+    <thead><tr><th>ID</th><th>Name</th><th>City</th><th>Phone</th><th>Emergency</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody>
+    {% for h in hospitals %}
+    <tr>
+      <td>{{ h.hospital_id }}</td><td>{{ h.name }}</td><td>{{ h.city }}</td><td>{{ h.phone }}</td>
+      <td>{{ 'Yes' if h.emergency_available else 'No' }}</td><td>{{ h.status }}</td>
+      <td>
+        <form method="post" style="display:inline;" onsubmit="return confirm('Delete hospital?');">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="action" value="delete">
+          <input type="hidden" name="id" value="{{ h.id }}">
+          <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

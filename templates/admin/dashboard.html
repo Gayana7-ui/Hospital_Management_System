@@ -1,0 +1,19 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Admin Dashboard{% endblock %}
+{% block content %}
+<h1 class="page-title">System Overview</h1>
+<div class="stats-grid">
+  <div class="stat-card"><div class="label">Patients</div><div class="value">{{ stats.patients }}</div></div>
+  <div class="stat-card"><div class="label">Doctors</div><div class="value">{{ stats.doctors }}</div></div>
+  <div class="stat-card"><div class="label">Receptionists</div><div class="value">{{ stats.receptionists }}</div></div>
+  <div class="stat-card"><div class="label">Hospitals</div><div class="value">{{ stats.hospitals }}</div></div>
+  <div class="stat-card"><div class="label">Appointments</div><div class="value">{{ stats.appointments }}</div></div>
+  <div class="stat-card"><div class="label">Medicines</div><div class="value">{{ stats.medicines }}</div></div>
+  <div class="stat-card"><div class="label">Prescriptions</div><div class="value">{{ stats.prescriptions }}</div></div>
+  <div class="stat-card"><div class="label">Pending Blood Requests</div><div class="value">{{ stats.blood_requests }}</div></div>
+  <div class="stat-card"><div class="label">Unpaid Bills</div><div class="value">{{ stats.pending_bills }}</div></div>
+</div>
+{% endblock %}

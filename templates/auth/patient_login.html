@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Patient Login{% endblock %}
+{% block body %}
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Patient Login</h1>
+    <p class="subtitle">Sign in with your Patient ID and password</p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+      <div class="alert alert-{{ 'error' if category == 'error' else category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% if request.args.get('registered') %}
+    <div class="alert alert-success">Your Patient ID: <strong>{{ request.args.get('registered') }}</strong></div>
+    {% endif %}
+    <form method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="form-group">
+        <label>Patient ID</label>
+        <input class="form-control" name="patient_id" placeholder="PAT001" value="{{ request.args.get('registered','') }}" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" name="password" required>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Login</button>
+    </form>
+    <div class="auth-links">
+      New patient? <a href="{{ url_for('auth.patient_register') }}">Register</a> ·
+      <a href="{{ url_for('main.index') }}">Home</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

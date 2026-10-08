@@ -1,0 +1,31 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Blood Reports{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Blood Reports{% endblock %}
+{% block content %}
+<div class="panel">
+  {% if reports %}
+  <table class="data">
+    <thead><tr><th>Report</th><th>Patient</th><th>Group</th><th>Qty</th><th>Hospital</th><th>Bank</th><th>Txn</th><th>Date</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for r in reports %}
+    <tr>
+      <td>{{ r.report_id }}</td>
+      <td>{{ r.patient.patient_id if r.patient else '-' }}</td>
+      <td>{{ r.blood_group }}</td>
+      <td>{{ r.quantity }}</td>
+      <td>{{ r.hospital or '-' }}</td>
+      <td>{{ r.blood_bank or '-' }}</td>
+      <td>{{ r.transaction_id or '-' }}</td>
+      <td>{{ r.report_date }}</td>
+      <td>{{ r.status }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">No blood reports yet. Issue blood via Transactions to generate reports.</div>
+  {% endif %}
+</div>
+{% endblock %}

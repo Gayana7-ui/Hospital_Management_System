@@ -1,0 +1,36 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Blood Requests{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Blood Requests{% endblock %}
+{% block content %}
+<div class="panel">
+  <table class="data">
+    <thead><tr><th>Request</th><th>Patient</th><th>Group</th><th>Qty</th><th>Hospital</th><th>Status</th><th>Update</th></tr></thead>
+    <tbody>
+    {% for r in requests %}
+    <tr>
+      <td>{{ r.request_id }}</td>
+      <td>{{ r.patient_name }}</td>
+      <td>{{ r.blood_group_required }}</td>
+      <td>{{ r.quantity_required }}</td>
+      <td>{{ r.hospital }}</td>
+      <td>{{ r.status }}</td>
+      <td>
+        <form method="post" style="display:flex;gap:0.35rem;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="id" value="{{ r.id }}">
+          <select class="form-control" name="status" style="width:auto;">
+            {% for s in ['Pending','Available','Partially Available','Not Available','Completed'] %}
+            <option {% if r.status==s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
+          <button class="btn btn-secondary btn-sm" type="submit">Save</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

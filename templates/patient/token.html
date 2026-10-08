@@ -1,0 +1,34 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}My Token{% endblock %}
+{% block brand %}Patient Portal{% endblock %}
+{% block sidebar %}{% include 'patient/_sidebar.html' %}{% endblock %}
+{% block page_heading %}My Token{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Tokens & Queue</h2>
+  <div id="my-queue"></div>
+  {% if tokens %}
+  <h3 style="margin:1.25rem 0 0.75rem;">Token History</h3>
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Token</th><th>Doctor</th><th>Time</th><th>Position</th><th>Status</th></tr></thead>
+      <tbody>
+      {% for t in tokens %}
+      <tr>
+        <td><strong>{{ t.token_number }}</strong></td>
+        <td>{{ t.doctor.name if t.doctor else '-' }}</td>
+        <td>{{ t.appointment_time or '-' }}</td>
+        <td>{{ t.queue_position }}</td>
+        <td><span class="badge badge-warning">{{ t.status }}</span></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/queue.js') }}"></script>
+<script>document.addEventListener('DOMContentLoaded', () => refreshQueue('my-queue', 8000));</script>
+{% endblock %}

@@ -1,0 +1,12 @@
+<a href="{{ url_for('patient.dashboard') }}" class="{{ 'active' if request.endpoint == 'patient.dashboard' }}">Dashboard</a>
+<a href="{{ url_for('patient.profile') }}" class="{{ 'active' if request.endpoint == 'patient.profile' }}">My Profile</a>
+<a href="{{ url_for('patient.book_appointment') }}" class="{{ 'active' if request.endpoint == 'patient.book_appointment' }}">Book Appointment</a>
+<a href="{{ url_for('patient.appointments') }}" class="{{ 'active' if request.endpoint == 'patient.appointments' }}">My Appointments</a>
+<a href="{{ url_for('patient.token') }}" class="{{ 'active' if request.endpoint == 'patient.token' }}">My Token</a>
+<a href="{{ url_for('patient.prescriptions') }}" class="{{ 'active' if request.endpoint == 'patient.prescriptions' }}">My Prescriptions</a>
+<a href="{{ url_for('patient.reminders') }}" class="{{ 'active' if request.endpoint == 'patient.reminders' }}">Medicine Reminders</a>
+<a href="{{ url_for('patient.ask_doctor') }}" class="{{ 'active' if request.endpoint == 'patient.ask_doctor' }}">Ask Doctor</a>
+<a href="{{ url_for('patient.billing') }}" class="{{ 'active' if request.endpoint == 'patient.billing' }}">Billing</a>
+<a href="{{ url_for('patient.blood_requirement') }}" class="{{ 'active' if request.endpoint == 'patient.blood_requirement' }}">Blood Requirement</a>
+<a href="{{ url_for('patient.emergency_hospitals') }}" class="{{ 'active' if request.endpoint == 'patient.emergency_hospitals' }}">Emergency Hospitals</a>
+<a href="{{ url_for('patient.search_doctors') }}" class="{{ 'active' if request.endpoint == 'patient.search_doctors' }}">Find Doctors</a>

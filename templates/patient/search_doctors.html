@@ -1,0 +1,38 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Find Doctors{% endblock %}
+{% block brand %}Patient Portal{% endblock %}
+{% block sidebar %}{% include 'patient/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Disease-based Doctor Search{% endblock %}
+{% block content %}
+<div class="panel">
+  <form method="get" class="search-bar">
+    <input class="form-control" name="disease" value="{{ disease }}" placeholder="Enter disease or health problem (e.g. fever, heart, skin)">
+    <button class="btn btn-primary" type="submit">Search Doctors</button>
+  </form>
+  {% if disease %}
+  <p class="page-sub">Results for “{{ disease }}”</p>
+  {% endif %}
+  {% if doctors %}
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Doctor</th><th>Specialization</th><th>Qualification</th><th>Experience</th><th>Hospital</th><th>Availability</th><th></th></tr></thead>
+      <tbody>
+      {% for d in doctors %}
+      <tr>
+        <td>{{ d.name }}</td>
+        <td>{{ d.specialization }}</td>
+        <td>{{ d.qualification }}</td>
+        <td>{{ d.experience }} yrs</td>
+        <td>{{ d.hospital }}</td>
+        <td><span class="badge badge-info">{{ d.availability }}</span></td>
+        <td><a class="btn btn-primary btn-sm" href="{{ url_for('patient.book_appointment') }}">Book</a></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% elif disease %}
+  <div class="empty-state">No doctors found for this condition.</div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Billing{% endblock %}
+{% block brand %}Patient Portal{% endblock %}
+{% block sidebar %}{% include 'patient/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Billing{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>My Bills</h2>
+  {% if bills %}
+  <div class="table-wrap">
+    <table class="data">
+      <thead>
+        <tr><th>Bill ID</th><th>Hospital</th><th>Consultation</th><th>Entry</th><th>Medicine</th><th>Insurance</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+      {% for b in bills %}
+      <tr>
+        <td>{{ b.bill_id }}</td>
+        <td>{{ b.hospital }}</td>
+        <td>₹{{ '%.2f'|format(b.consultation_fee) }}</td>
+        <td>₹{{ '%.2f'|format(b.entry_fee) }}</td>
+        <td>₹{{ '%.2f'|format(b.medicine_charges) }}</td>
+        <td>₹{{ '%.2f'|format(b.insurance) }}</td>
+        <td>₹{{ '%.2f'|format(b.total_amount) }}</td>
+        <td>₹{{ '%.2f'|format(b.amount_paid) }}</td>
+        <td>₹{{ '%.2f'|format(b.balance) }}</td>
+        <td><span class="badge badge-warning">{{ b.payment_status }}</span></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">No billing records.</div>
+  {% endif %}
+</div>
+{% endblock %}

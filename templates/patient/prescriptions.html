@@ -1,0 +1,43 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}My Prescriptions{% endblock %}
+{% block brand %}Patient Portal{% endblock %}
+{% block sidebar %}{% include 'patient/_sidebar.html' %}{% endblock %}
+{% block page_heading %}My Prescriptions{% endblock %}
+{% block content %}
+{% if prescriptions %}
+  {% for rx in prescriptions %}
+  <div class="panel">
+    <h2>{{ rx.prescription_id }} — {{ rx.doctor.name if rx.doctor else 'Doctor' }}</h2>
+    <div class="info-grid">
+      <div class="info-item"><div class="lbl">Date</div><div class="val">{{ rx.prescription_date }}</div></div>
+      <div class="info-item"><div class="lbl">Diagnosis</div><div class="val">{{ rx.diagnosis or '-' }}</div></div>
+      <div class="info-item"><div class="lbl">Doctor</div><div class="val">{{ rx.doctor.name if rx.doctor else '-' }}</div></div>
+    </div>
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr><th>Medicine</th><th>Dosage</th><th>Intake (M-A-N)</th><th>Meaning</th><th>Days</th><th>Qty</th><th>Instructions</th></tr>
+        </thead>
+        <tbody>
+        {% for m in rx.medicines %}
+          {% set parts = (m.medicine_intake or '0-0-0').split('-') %}
+          <tr>
+            <td>{{ m.medicine_name }}</td>
+            <td>{{ m.dosage }}</td>
+            <td><strong>{{ m.medicine_intake }}</strong></td>
+            <td>Morning: {{ parts[0] if parts|length>0 else 0 }} · Afternoon: {{ parts[1] if parts|length>1 else 0 }} · Night: {{ parts[2] if parts|length>2 else 0 }}</td>
+            <td>{{ m.number_of_days }}</td>
+            <td>{{ m.quantity }}</td>
+            <td>{{ m.instructions or '-' }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:0.75rem;font-size:0.85rem;color:var(--muted);">Prescriptions are read-only and cannot be edited by patients.</p>
+  </div>
+  {% endfor %}
+{% else %}
+<div class="empty-state">No prescriptions yet.</div>
+{% endif %}
+{% endblock %}

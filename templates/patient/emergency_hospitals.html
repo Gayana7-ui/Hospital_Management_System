@@ -1,0 +1,38 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Emergency Hospitals{% endblock %}
+{% block brand %}Patient Portal{% endblock %}
+{% block sidebar %}{% include 'patient/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Emergency Hospitals{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Find Nearby Emergency Hospitals</h2>
+  <p class="page-sub" id="geo-status">Allow location access for nearby results, or search manually.</p>
+  <div class="search-bar">
+    <input class="form-control" id="hospital-search" placeholder="Search by hospital name or city">
+    <button class="btn btn-primary" type="button" onclick="loadNearbyHospitals()">Use My Location</button>
+    <button class="btn btn-secondary" type="button" onclick="manualHospitalSearch()">Manual Search</button>
+  </div>
+  <div id="hospital-results">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Hospital</th><th>Address</th><th>City</th><th>Phone</th><th>Emergency</th><th>Services</th></tr></thead>
+        <tbody>
+        {% for h in hospitals %}
+        <tr>
+          <td>{{ h.name }}</td>
+          <td>{{ h.address }}</td>
+          <td>{{ h.city }}</td>
+          <td>{{ h.phone }}</td>
+          <td>{% if h.emergency_available %}<span class="badge badge-success">Yes</span>{% else %}<span class="badge badge-danger">No</span>{% endif %}</td>
+          <td>{{ h.services }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/emergency.js') }}"></script>
+{% endblock %}

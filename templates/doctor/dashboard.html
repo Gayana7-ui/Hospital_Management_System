@@ -1,0 +1,16 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Doctor Dashboard{% endblock %}
+{% block brand %}Doctor Portal{% endblock %}
+{% block sidebar %}{% include 'doctor/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Dashboard{% endblock %}
+{% block content %}
+<h1 class="page-title">Dr. {{ doctor.name }}</h1>
+<p class="page-sub">{{ doctor.specialization }} · {{ doctor.hospital }}</p>
+<div class="stats-grid">
+  <div class="stat-card"><div class="label">Today's Appointments</div><div class="value">{{ today_appts }}</div></div>
+  <div class="stat-card"><div class="label">Waiting Patients</div><div class="value">{{ waiting }}</div></div>
+  <div class="stat-card"><div class="label">Completed Appointments</div><div class="value">{{ completed }}</div></div>
+  <div class="stat-card"><div class="label">Total Prescriptions</div><div class="value">{{ rx_count }}</div></div>
+  <div class="stat-card"><div class="label">Availability</div><div class="value" style="font-size:1rem;"><span class="badge badge-success">{{ doctor.availability }}</span></div></div>
+</div>
+{% endblock %}

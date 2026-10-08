@@ -1,0 +1,27 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Patient Entry{% endblock %}
+{% block brand %}Reception Desk{% endblock %}
+{% block sidebar %}{% include 'receptionist/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Patient Entry{% endblock %}
+{% block content %}
+<div class="panel">
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-grid">
+      <div class="form-group"><label>Patient ID</label><input class="form-control" name="patient_id" placeholder="PAT001" required></div>
+      <div class="form-group">
+        <label>Doctor</label>
+        <select class="form-control" name="doctor_id">
+          <option value="">Optional</option>
+          {% for d in doctors %}<option value="{{ d.doctor_id }}">{{ d.name }} ({{ d.availability }})</option>{% endfor %}
+        </select>
+      </div>
+      <div class="form-group"><label>Disease</label><input class="form-control" name="disease"></div>
+      <div class="form-group"><label>Entry Fee</label><input type="number" step="0.01" class="form-control" name="entry_fee" value="50"></div>
+      <div class="form-group"><label>Consultation Fee</label><input type="number" step="0.01" class="form-control" name="consultation_fee" value="200"></div>
+      <div class="form-group"><label>Hospital</label><input class="form-control" name="hospital" value="City General Hospital"></div>
+    </div>
+    <button class="btn btn-primary" type="submit">Record Entry & Generate Token</button>
+  </form>
+</div>
+{% endblock %}

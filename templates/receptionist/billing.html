@@ -1,0 +1,44 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Billing{% endblock %}
+{% block brand %}Reception Desk{% endblock %}
+{% block sidebar %}{% include 'receptionist/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Billing{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Create Bill</h2>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-grid">
+      <div class="form-group"><label>Patient ID</label><input class="form-control" name="patient_id" required></div>
+      <div class="form-group"><label>Hospital</label><input class="form-control" name="hospital" value="City General Hospital"></div>
+      <div class="form-group"><label>Consultation Fee</label><input type="number" step="0.01" class="form-control" name="consultation_fee" value="300"></div>
+      <div class="form-group"><label>Entry Fee</label><input type="number" step="0.01" class="form-control" name="entry_fee" value="50"></div>
+      <div class="form-group"><label>Medicine Charges</label><input type="number" step="0.01" class="form-control" name="medicine_charges" value="0"></div>
+      <div class="form-group"><label>Other Charges</label><input type="number" step="0.01" class="form-control" name="other_charges" value="0"></div>
+      <div class="form-group"><label>Insurance Covered</label><input type="number" step="0.01" class="form-control" name="insurance" value="0"></div>
+      <div class="form-group"><label>Amount Paid</label><input type="number" step="0.01" class="form-control" name="amount_paid" value="0"></div>
+    </div>
+    <button class="btn btn-primary" type="submit">Create Bill</button>
+  </form>
+</div>
+<div class="panel">
+  <h2>Bills</h2>
+  <div class="table-wrap">
+    <table class="data">
+      <thead><tr><th>Bill</th><th>Patient</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th></tr></thead>
+      <tbody>
+      {% for b in bills %}
+      <tr>
+        <td>{{ b.bill_id }}</td>
+        <td>{{ b.patient.name if b.patient else '-' }}</td>
+        <td>₹{{ '%.2f'|format(b.total_amount) }}</td>
+        <td>₹{{ '%.2f'|format(b.amount_paid) }}</td>
+        <td>₹{{ '%.2f'|format(b.balance) }}</td>
+        <td><span class="badge badge-warning">{{ b.payment_status }}</span></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

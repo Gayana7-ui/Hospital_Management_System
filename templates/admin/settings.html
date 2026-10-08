@@ -1,0 +1,19 @@
+{% extends 'layouts/dashboard.html' %}
+{% block title %}Settings{% endblock %}
+{% block brand %}Admin Console{% endblock %}
+{% block sidebar %}{% include 'admin/_sidebar.html' %}{% endblock %}
+{% block page_heading %}Settings{% endblock %}
+{% block content %}
+<div class="panel">
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-grid">
+      <div class="form-group"><label>Admin ID</label><input class="form-control" value="{{ admin.admin_id }}" readonly></div>
+      <div class="form-group"><label>Name</label><input class="form-control" name="name" value="{{ admin.name }}"></div>
+      <div class="form-group"><label>Email</label><input class="form-control" name="email" value="{{ admin.email or '' }}"></div>
+      <div class="form-group"><label>New Password (optional)</label><input type="password" class="form-control" name="password"></div>
+    </div>
+    <button class="btn btn-primary" type="submit">Save Settings</button>
+  </form>
+</div>
+{% endblock %}
